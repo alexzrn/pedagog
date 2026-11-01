@@ -1,0 +1,67 @@
+---
+import "../styles/site.css";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  wide?: boolean;
+}
+
+const { title, description, path, wide = false } = Astro.props;
+const base = "https://pedagog.beliberde.net";
+const canonical = new URL(path, base).href;
+
+const nav = [
+  { href: "/program", label: "Программа" },
+  { href: "/legal", label: "Документы" },
+  { href: "/about", label: "О центре" },
+];
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Игровая зависимость и деньги" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    <header class="top">
+      <p class="top__kicker">Программа для специалистов</p>
+      <p class="top__name"><a href="/">Игровая зависимость и деньги</a></p>
+      <nav class="nav" aria-label="Разделы сайта">
+        {
+          nav.map((item) => (
+            <a href={item.href} aria-current={item.href === path ? "page" : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main class:list={[{ wide }]}>
+      <slot />
+    </main>
+
+    <footer class="foot">
+      <p>Игровая зависимость и деньги. Программа 144 часа.</p>
+      <p class="placeholder">Сведения о лицензии партнёра: уточняются.</p>
+      <div class="foot__links">
+        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href="/#zayavka">Заявка</a>
+      </div>
+    </footer>
+  </body>
+</html>

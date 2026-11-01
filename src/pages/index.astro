@@ -1,586 +1,243 @@
 ---
+import Base from "../layouts/Base.astro";
+
 const title = "Игровая зависимость и деньги: программа 144 часа для психологов";
 const description =
   "Практическая программа 144 часа для психологов и помогающих специалистов: работа с денежной стороной игры, ставками, долгами и семейным бюджетом. 29 900 ₽, ранняя оплата 24 900 ₽.";
 ---
 
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
-  </head>
-  <body>
-    <header class="top">
-      <p class="top__kicker">Программа для специалистов</p>
-      <p class="top__name">Игровая зависимость и деньги</p>
-    </header>
+<Base title={title} description={description} path="/">
+  <section class="hero">
+    <h1>Игровая зависимость и деньги</h1>
+    <p class="hero__lead">
+      Практическая программа 144 часа для психологов и помогающих специалистов.
+      Учим работать с денежной стороной игры. Ставки, долги, семейный бюджет.
+    </p>
+    <p class="hero__price">
+      <span class="price-now">29 900 ₽</span>
+      <span class="price-early">ранняя оплата 24 900 ₽</span>
+    </p>
+    <p class="hero__prepay">Предоплата 5 000 ₽, возвращаем по запросу до старта.</p>
+    <p class="hero__cta"><a class="button" href="#zayavka">Занять место</a></p>
+  </section>
 
-    <main>
-      <section class="hero">
-        <h1>Игровая зависимость и деньги</h1>
-        <p class="hero__lead">
-          Практическая программа 144 часа для психологов и помогающих специалистов.
-          Учим работать с денежной стороной игры. Ставки, долги, семейный бюджет.
-        </p>
-        <p class="hero__price">
-          <span class="price-now">29 900 ₽</span>
-          <span class="price-early">ранняя оплата 24 900 ₽</span>
-        </p>
-        <p class="hero__prepay">Предоплата 5 000 ₽, возвращаем по запросу до старта.</p>
-        <p class="hero__cta"><a class="button" href="#zayavka">Занять место</a></p>
-      </section>
+  <section>
+    <h2>Кому подойдёт</h2>
+    <ul>
+      <li>Психологам частной практики, к которым приходят с долгами из-за ставок.</li>
+      <li>
+        Школьным психологам, которые видят ставки у учеников и не знают, что говорить
+        родителям.
+      </li>
+      <li>Соцработникам и сотрудникам НКО, которые ведут семьи с долгами.</li>
+      <li>Консультантам, которые хотят добавить денежную тему в свою практику.</li>
+    </ul>
+  </section>
 
-      <section>
-        <h2>Кому подойдёт</h2>
-        <ul>
-          <li>Психологам частной практики, к которым приходят с долгами из-за ставок.</li>
-          <li>
-            Школьным психологам, которые видят ставки у учеников и не знают, что говорить
-            родителям.
-          </li>
-          <li>Соцработникам и сотрудникам НКО, которые ведут семьи с долгами.</li>
-          <li>Консультантам, которые хотят добавить денежную тему в свою практику.</li>
-        </ul>
-      </section>
+  <section>
+    <h2>Кому не подойдёт</h2>
+    <ul>
+      <li>
+        Тем, кто ищет помощь с собственной игрой. Программа готовит специалистов.
+        За личной помощью обратитесь к врачу по месту жительства.
+      </li>
+      <li>Тем, кто хочет диплом за две недели. Здесь 144 часа работы и практика.</li>
+      <li>
+        Тем, кто ждёт готовых скриптов без практики. Скриптов не будет. Будут разборы
+        и тренировки.
+      </li>
+      <li>Тем, кому нужны обещания работы. Трудоустройство не гарантируем.</li>
+    </ul>
+  </section>
 
-      <section>
-        <h2>Кому не подойдёт</h2>
-        <ul>
-          <li>
-            Тем, кто ищет помощь с собственной игрой. Программа готовит специалистов.
-            За личной помощью обратитесь к врачу по месту жительства.
-          </li>
-          <li>Тем, кто хочет диплом за две недели. Здесь 144 часа работы и практика.</li>
-          <li>
-            Тем, кто ждёт готовых скриптов без практики. Скриптов не будет. Будут разборы
-            и тренировки.
-          </li>
-          <li>Тем, кому нужны обещания работы. Трудоустройство не гарантируем.</li>
-        </ul>
-      </section>
+  <section>
+    <h2>Что вы будете делать в понедельник</h2>
+    <ol class="skills">
+      <li>Спрашивать про деньги на первой встрече.</li>
+      <li>Составлять карту долгов и ставок клиента.</li>
+      <li>Отличать игру от других денежных проблем.</li>
+      <li>Договариваться о финансовых границах в семье.</li>
+      <li>Вести протокол встречи за 15 минут.</li>
+      <li>Передавать клиента психиатру и юристу, когда это нужно.</li>
+      <li>Отказывать в работе, если запрос вне вашей компетенции.</li>
+    </ol>
+  </section>
 
-      <section>
-        <h2>Что вы будете делать в понедельник</h2>
-        <ol class="skills">
-          <li>Спрашивать про деньги на первой встрече.</li>
-          <li>Составлять карту долгов и ставок клиента.</li>
-          <li>Отличать игру от других денежных проблем.</li>
-          <li>Договариваться о финансовых границах в семье.</li>
-          <li>Вести протокол встречи за 15 минут.</li>
-          <li>Передавать клиента психиатру и юристу, когда это нужно.</li>
-          <li>Отказывать в работе, если запрос вне вашей компетенции.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>Программа: 8 модулей</h2>
-        <ol class="modules">
-          <li>
-            <h3>1. Деньги в запросе</h3>
-            <p>
-              Как клиенты говорят про ставки и долги. Формулировки для первых 20 минут
-              встречи.
-            </p>
-          </li>
-          <li>
-            <h3>2. Карта долгов</h3>
-            <p>
-              Таблица кредитов, микрозаймов, долгов букмекерам и ставок. Разбор учебного
-              кейса по шагам.
-            </p>
-          </li>
-          <li>
-            <h3>3. Семья и границы</h3>
-            <p>Разговор с партнёром игрока. Письменные договорённости о бюджете.</p>
-          </li>
-          <li>
-            <h3>4. Подростки и ставки</h3>
-            <p>Признаки того, что подросток ставит ставки. Беседа с родителями без нотаций.</p>
-          </li>
-          <li>
-            <h3>5. Срывы и возвраты</h3>
-            <p>План действий на 48 часов. Когда передавать психиатру и юристу.</p>
-          </li>
-          <li>
-            <h3>6. Документы и протокол</h3>
-            <p>Записи, которые защищают специалиста. Шаблоны форм для приёма.</p>
-          </li>
-          <li>
-            <h3>7. Деньги специалиста</h3>
-            <p>Цены на свои консультации. Предоплата, отмены и возвраты.</p>
-          </li>
-          <li>
-            <h3>8. Супервизия</h3>
-            <p>Разбор двух своих случаев. План работы на 90 дней.</p>
-          </li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>Кто ведёт</h2>
-        <p class="placeholder">Имя, стаж и место работы ведущего: уточняется.</p>
-      </section>
-
-      <section>
-        <h2>Документ и лицензия</h2>
+  <section>
+    <h2>Программа: 8 модулей</h2>
+    <ol class="modules">
+      <li>
+        <h3>1. Деньги в запросе</h3>
         <p>
-          Документ: удостоверение о повышении квалификации, 144 часа. Выдаём только при
-          действующей лицензии партнёра.
+          Как клиенты говорят про ставки и долги. Формулировки для первых 20 минут
+          встречи.
         </p>
-        <p class="placeholder">
-          Лицензия партнёра: номер и ссылка на реестр уточняются. Проверяйте номер в реестре
-          Рособрнадзора: <a href="https://obrnadzor.gov.ru" rel="noopener">obrnadzor.gov.ru</a>.
+      </li>
+      <li>
+        <h3>2. Карта долгов</h3>
+        <p>
+          Таблица кредитов, микрозаймов, долгов букмекерам и ставок. Разбор учебного
+          кейса по шагам.
         </p>
-      </section>
-
-      <section>
-        <h2>Формат и график</h2>
-        <p>Формат: уточняется. Объём 144 академических часа.</p>
-        <p class="placeholder">Расписание и даты старта: уточняются.</p>
-      </section>
-
-      <section>
-        <h2>Цена</h2>
-        <p>Полная стоимость 29 900 ₽.</p>
-        <p>Ранняя оплата 24 900 ₽ (срок ранней цены уточняйте).</p>
-        <p>Предоплата 5 000 ₽. Возвращаем по запросу до старта.</p>
-      </section>
-
-      <section>
-        <h2>Доказательство</h2>
-        <p class="placeholder">Отзыв выпускника или кейс с цифрами: уточняется.</p>
-      </section>
-
-      <section>
-        <h2>Вопросы и ответы</h2>
-        <dl class="faq">
-          <dt>Я сам играю. Мне сюда?</dt>
-          <dd>
-            Нет. Программа для специалистов. За личной помощью обратитесь к врачу по месту
-            жительства.
-          </dd>
-
-          <dt>Какой документ я получу?</dt>
-          <dd>
-            Удостоверение о повышении квалификации на 144 часа. Выдаём при действующей
-            лицензии партнёра.
-          </dd>
-
-          <dt>Сколько длится программа?</dt>
-          <dd>144 академических часа. Расписание уточняется.</dd>
-
-          <dt>Занятия онлайн или очно?</dt>
-          <dd>Формат уточняется.</dd>
-
-          <dt>Что будет, если пропущу занятие?</dt>
-          <dd>Порядок пропусков и доступ к материалам уточняются.</dd>
-
-          <dt>Можно ли платить частями?</dt>
-          <dd>
-            Да. Предоплата 5 000 ₽ фиксирует раннюю цену 24 900 ₽. График остатка
-            уточняется.
-          </dd>
-
-          <dt>Предоплату вернут?</dt>
-          <dd>Да. 5 000 ₽ возвращаем по запросу до старта программы.</dd>
-
-          <dt>Работу после программы обещаете?</dt>
-          <dd>Нет. Даём навыки и шаблоны для частной практики.</dd>
-        </dl>
-      </section>
-
-      <section id="zayavka" class="apply">
-        <h2>Заявка</h2>
-        <p class="apply__lead">Дальше свяжемся по оплате.</p>
-
-        <form id="apply-form" action="" method="post" novalidate>
-          <div class="field">
-            <label for="name">Имя</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              autocomplete="name"
-              required
-              minlength="2"
-              placeholder="Как к вам обращаться"
-            />
-          </div>
-
-          <div class="field">
-            <label for="contact">Телефон или телеграм</label>
-            <input
-              id="contact"
-              name="contact"
-              type="text"
-              autocomplete="tel"
-              required
-              minlength="5"
-              placeholder="+7 900 000 00 00 или @nickname"
-            />
-          </div>
-
-          <div class="check">
-            <input id="consent" name="consent" type="checkbox" required />
-            <label for="consent">
-              Согласен на обработку персональных данных для ответа на заявку.
-            </label>
-          </div>
-
-          <button class="button button--wide" type="submit">Занять место</button>
-          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-        </form>
-      </section>
-    </main>
-
-    <footer class="foot">
-      <p>Игровая зависимость и деньги. Программа 144 часа.</p>
-      <p class="placeholder">Сведения о лицензии партнёра: уточняются.</p>
-    </footer>
-
-    <script>
-      const form = document.getElementById("apply-form");
-      const status = document.getElementById("form-status");
-
-      form?.addEventListener("submit", (event) => {
-        event.preventDefault();
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
-        status.textContent = "Заявка принята, свяжемся";
-        form.reset();
-      });
-    </script>
-
-    <style>
-      :root {
-        --ink: #17140f;
-        --ink-soft: #4a433a;
-        --paper: #faf7f2;
-        --line: #ded6c9;
-        --accent: #9a3d1f;
-        --accent-dark: #7c2f16;
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-
-      html {
-        -webkit-text-size-adjust: 100%;
-      }
-
-      body {
-        margin: 0;
-        background: var(--paper);
-        color: var(--ink);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-          Arial, sans-serif;
-        font-size: 17px;
-        line-height: 1.65;
-      }
-
-      main,
-      .top,
-      .foot {
-        max-width: 41rem;
-        margin: 0 auto;
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
-      }
-
-      .top {
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .top__kicker {
-        margin: 0 0 0.15rem;
-        font-size: 0.8125rem;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--ink-soft);
-      }
-
-      .top__name {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 600;
-      }
-
-      section {
-        padding: 2rem 0;
-        border-bottom: 1px solid var(--line);
-      }
-
-      section:last-of-type {
-        border-bottom: 0;
-      }
-
-      h1 {
-        margin: 0 0 1rem;
-        font-size: 1.875rem;
-        line-height: 1.2;
-        letter-spacing: -0.01em;
-      }
-
-      h2 {
-        margin: 0 0 0.9rem;
-        font-size: 1.3125rem;
-        line-height: 1.3;
-      }
-
-      h3 {
-        margin: 0 0 0.25rem;
-        font-size: 1.0625rem;
-        line-height: 1.4;
-      }
-
-      p {
-        margin: 0 0 0.9rem;
-      }
-
-      p:last-child {
-        margin-bottom: 0;
-      }
-
-      a {
-        color: var(--accent);
-        text-underline-offset: 0.15em;
-      }
-
-      .hero__lead {
-        font-size: 1.1176rem;
-        color: var(--ink-soft);
-      }
-
-      .hero__price {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        gap: 0.35rem 0.9rem;
-        margin-top: 1.25rem;
-      }
-
-      .price-now {
-        font-size: 1.625rem;
-        font-weight: 700;
-        letter-spacing: -0.01em;
-      }
-
-      .price-early {
-        font-size: 1rem;
-        color: var(--accent);
-      }
-
-      .hero__prepay {
-        font-size: 0.9375rem;
-        color: var(--ink-soft);
-      }
-
-      .hero__cta {
-        margin-top: 1.5rem;
-      }
-
-      .button {
-        display: inline-block;
-        padding: 0.85rem 1.6rem;
-        background: var(--accent);
-        color: #fff;
-        font-size: 1.0625rem;
-        font-weight: 600;
-        text-decoration: none;
-        border: 0;
-        border-radius: 3px;
-        cursor: pointer;
-        font-family: inherit;
-        text-align: center;
-        min-height: 48px;
-      }
-
-      .button:hover,
-      .button:focus-visible {
-        background: var(--accent-dark);
-        color: #fff;
-      }
-
-      .button:focus-visible {
-        outline: 2px solid var(--ink);
-        outline-offset: 3px;
-      }
-
-      .button--wide {
-        display: block;
-        width: 100%;
-      }
-
-      ul,
-      ol {
-        margin: 0;
-        padding-left: 1.35rem;
-      }
-
-      li {
-        margin-bottom: 0.7rem;
-        padding-left: 0.15rem;
-      }
-
-      li:last-child {
-        margin-bottom: 0;
-      }
-
-      .modules {
-        list-style: none;
-        padding-left: 0;
-      }
-
-      .modules > li {
-        padding: 0.9rem 0;
-        border-top: 1px solid var(--line);
-      }
-
-      .modules > li:first-child {
-        border-top: 0;
-        padding-top: 0;
-      }
-
-      .modules > li:last-child {
-        padding-bottom: 0;
-      }
-
-      .modules p {
-        margin: 0;
-        color: var(--ink-soft);
-      }
-
-      .placeholder {
-        color: var(--ink-soft);
-        font-style: italic;
-      }
-
-      .faq dt {
-        font-weight: 600;
-        margin-top: 1.15rem;
-      }
-
-      .faq dt:first-child {
-        margin-top: 0;
-      }
-
-      .faq dd {
-        margin: 0.2rem 0 0;
-        color: var(--ink-soft);
-      }
-
-      .apply {
-        padding-bottom: 2.5rem;
-      }
-
-      .apply__lead {
-        color: var(--ink-soft);
-      }
-
-      .field {
-        margin-bottom: 1.1rem;
-      }
-
-      .field label {
-        display: block;
-        margin-bottom: 0.35rem;
-        font-size: 0.9375rem;
-        font-weight: 600;
-      }
-
-      .field input {
-        display: block;
-        width: 100%;
-        padding: 0.7rem 0.75rem;
-        font-size: 1.0625rem;
-        font-family: inherit;
-        color: var(--ink);
-        background: #fff;
-        border: 1px solid #b8ae9e;
-        border-radius: 3px;
-        min-height: 48px;
-      }
-
-      .field input:focus {
-        outline: 2px solid var(--accent);
-        outline-offset: 1px;
-        border-color: var(--accent);
-      }
-
-      .check {
-        display: flex;
-        gap: 0.6rem;
-        align-items: flex-start;
-        margin: 1.25rem 0 1.4rem;
-      }
-
-      .check input {
-        margin-top: 0.3rem;
-        width: 1.25rem;
-        height: 1.25rem;
-        flex: none;
-        accent-color: var(--accent);
-      }
-
-      .check label {
-        font-size: 0.9375rem;
-        color: var(--ink-soft);
-      }
-
-      .form-status {
-        margin: 1rem 0 0;
-        font-weight: 600;
-        color: var(--accent-dark);
-        min-height: 1.5rem;
-      }
-
-      .foot {
-        padding-top: 1.75rem;
-        padding-bottom: 2.5rem;
-        font-size: 0.875rem;
-        color: var(--ink-soft);
-      }
-
-      .foot p {
-        margin: 0 0 0.4rem;
-      }
-
-      @media (min-width: 40rem) {
-        body {
-          font-size: 18px;
-        }
-
-        h1 {
-          font-size: 2.5rem;
-        }
-
-        h2 {
-          font-size: 1.5rem;
-        }
-
-        .hero__price {
-          margin-top: 1.5rem;
-        }
-
-        .price-now {
-          font-size: 1.875rem;
-        }
-
-        section {
-          padding: 2.5rem 0;
-        }
-      }
-    </style>
-  </body>
-</html>
+      </li>
+      <li>
+        <h3>3. Семья и границы</h3>
+        <p>Разговор с партнёром игрока. Письменные договорённости о бюджете.</p>
+      </li>
+      <li>
+        <h3>4. Подростки и ставки</h3>
+        <p>Признаки того, что подросток ставит ставки. Беседа с родителями без нотаций.</p>
+      </li>
+      <li>
+        <h3>5. Срывы и возвраты</h3>
+        <p>План действий на 48 часов. Когда передавать психиатру и юристу.</p>
+      </li>
+      <li>
+        <h3>6. Документы и протокол</h3>
+        <p>Записи, которые защищают специалиста. Шаблоны форм для приёма.</p>
+      </li>
+      <li>
+        <h3>7. Деньги специалиста</h3>
+        <p>Цены на свои консультации. Предоплата, отмены и возвраты.</p>
+      </li>
+      <li>
+        <h3>8. Супервизия</h3>
+        <p>Разбор двух своих случаев. План работы на 90 дней.</p>
+      </li>
+    </ol>
+    <p class="note"><a href="/program">Полный учебный план: 8 модулей, часы и аттестация</a>.</p>
+  </section>
+
+  <section>
+    <h2>Кто ведёт</h2>
+    <p class="placeholder">Имя, стаж и место работы ведущего: уточняется.</p>
+    <p><a href="/about">Подробнее о центре</a>.</p>
+  </section>
+
+  <section>
+    <h2>Документ и лицензия</h2>
+    <p>
+      Документ: удостоверение о повышении квалификации, 144 часа. Выдаём только при
+      действующей лицензии партнёра.
+    </p>
+    <p class="placeholder">
+      Лицензия партнёра: номер и ссылка на реестр уточняются. Проверяйте номер в реестре
+      Рособрнадзора: <a href="https://obrnadzor.gov.ru" rel="noopener">obrnadzor.gov.ru</a>.
+    </p>
+    <p><a href="/legal">Документы, оплата, возврат и перенос</a>.</p>
+  </section>
+
+  <section>
+    <h2>Формат и график</h2>
+    <p>Формат: уточняется. Объём 144 академических часа.</p>
+    <p class="placeholder">Расписание и даты старта: уточняются.</p>
+  </section>
+
+  <section>
+    <h2>Цена</h2>
+    <p>Полная стоимость 29 900 ₽.</p>
+    <p>Ранняя оплата 24 900 ₽ (срок ранней цены уточняйте).</p>
+    <p>Предоплата 5 000 ₽. Возвращаем по запросу до старта.</p>
+  </section>
+
+  <section>
+    <h2>Доказательство</h2>
+    <p class="placeholder">Отзыв выпускника или кейс с цифрами: уточняется.</p>
+  </section>
+
+  <section>
+    <h2>Вопросы и ответы</h2>
+    <dl class="faq">
+      <dt>Я сам играю. Мне сюда?</dt>
+      <dd>
+        Нет. Программа для специалистов. За личной помощью обратитесь к врачу по месту
+        жительства.
+      </dd>
+
+      <dt>Какой документ я получу?</dt>
+      <dd>
+        Удостоверение о повышении квалификации на 144 часа. Выдаём при действующей
+        лицензии партнёра.
+      </dd>
+
+      <dt>Сколько длится программа?</dt>
+      <dd>144 академических часа. Расписание уточняется.</dd>
+
+      <dt>Занятия онлайн или очно?</dt>
+      <dd>Формат уточняется.</dd>
+
+      <dt>Что будет, если пропущу занятие?</dt>
+      <dd>Порядок пропусков и доступ к материалам уточняются.</dd>
+
+      <dt>Можно ли платить частями?</dt>
+      <dd>
+        Да. Предоплата 5 000 ₽ фиксирует раннюю цену 24 900 ₽. График остатка
+        уточняется.
+      </dd>
+
+      <dt>Предоплату вернут?</dt>
+      <dd>Да. 5 000 ₽ возвращаем по запросу до старта программы.</dd>
+
+      <dt>Работу после программы обещаете?</dt>
+      <dd>Нет. Даём навыки и шаблоны для частной практики.</dd>
+    </dl>
+  </section>
+
+  <section id="zayavka" class="apply">
+    <h2>Заявка</h2>
+    <p class="apply__lead">Дальше свяжемся по оплате.</p>
+
+    <form id="apply-form" action="" method="post" novalidate>
+      <div class="field">
+        <label for="name">Имя</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+          minlength="2"
+          placeholder="Как к вам обращаться"
+        />
+      </div>
+
+      <div class="field">
+        <label for="contact">Телефон или телеграм</label>
+        <input
+          id="contact"
+          name="contact"
+          type="text"
+          autocomplete="tel"
+          required
+          minlength="5"
+          placeholder="+7 900 000 00 00 или @nickname"
+        />
+      </div>
+
+      <div class="check">
+        <input id="consent" name="consent" type="checkbox" required />
+        <label for="consent">
+          Согласен на обработку персональных данных для ответа на заявку.
+        </label>
+      </div>
+
+      <button class="button button--wide" type="submit">Занять место</button>
+      <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+</Base>
+
+<script is:inline>
+  const form = document.getElementById("apply-form");
+  const status = document.getElementById("form-status");
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    status.textContent = "Заявка принята, свяжемся";
+    form.reset();
+  });
+</script>
