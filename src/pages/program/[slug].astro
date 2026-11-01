@@ -1,0 +1,230 @@
+---
+import Base from "../../layouts/Base.astro";
+import { findProgram, hours, price, programs } from "../../lib/programs.js";
+
+export function getStaticPaths() {
+  return programs.map((program) => ({ params: { slug: program.slug } }));
+}
+
+const { slug } = Astro.params;
+const program = findProgram(slug);
+
+if (!program) {
+  return Astro.redirect("/programs");
+}
+
+const totals = hours(program.modules);
+const isStub = (value: string) => !value || value === "уточняется";
+
+const title = `${program.title}: программа ${program.hours} часов`;
+const description = `${program.summary} Объём ${program.hours} академических часов, ${program.modulesCount} модулей, учебный план и аттестация. Запись на поток.`;
+
+const unknown = "уточняется";
+---
+
+<Base title={title} description={description} path={`/program/${program.slug}`} wide>
+  <nav class="crumbs" aria-label="Навигация по разделу">
+    <a href="/programs">Программы</a>
+    <span aria-hidden="true">/</span>
+    <span>{program.title}</span>
+  </nav>
+
+  <section class="page-head">
+    <p class="badge">{program.direction}</p>
+    <h1>{program.title}</h1>
+    <p class="page-head__lead">{program.summary}</p>
+    <dl class="facts">
+      <div><dt>Объём</dt><dd>{program.hours} академических часов</dd></div>
+      <div><dt>Модули</dt><dd>{program.modulesCount} по 18 часов</dd></div>
+      <div><dt>Теория и практика</dt><dd>{totals.theory} и {totals.practice} часов</dd></div>
+      <div>
+        <dt>Формат</dt>
+        <dd>{isStub(program.format) ? unknown : program.format}</dd>
+      </div>
+      <div>
+        <dt>Ближайший поток</dt>
+        <dd>{isStub(program.nextCohort) ? unknown : program.nextCohort}</dd>
+      </div>
+      <div><dt>Документ</dt><dd>{program.document}</dd></div>
+      <div><dt>Цена</dt><dd>{price(program.price)}</dd></div>
+    </dl>
+    <p class="cta-row">
+      <a class="button" href={`/apply?program=${program.slug}`}>Записаться на программу</a>
+    </p>
+  </section>
+
+  {
+    program.audience?.length > 0 && (
+      <section>
+        <h2>Кому подойдёт</h2>
+        <ul>
+          {program.audience.map((item: string) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    program.notAudience?.length > 0 && (
+      <section>
+        <h2>Кому не подойдёт</h2>
+        <ul>
+          {program.notAudience.map((item: string) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    program.outcomes?.length > 0 && (
+      <section>
+        <h2>Что вы будете делать в понедельник</h2>
+        <ol class="skills">
+          {program.outcomes.map((item: string) => (
+            <li>{item}</li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  {
+    program.modules?.length > 0 && (
+      <section>
+        <h2>Учебный план по модулям</h2>
+        <div class="table-wrap">
+          <table class="plan">
+            <caption>
+              Часы указаны в академических часах. Аттестация по модулю идёт внутри его
+              практики.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Модуль</th>
+                <th scope="col">Теория</th>
+                <th scope="col">Практика</th>
+                <th scope="col">Результат</th>
+              </tr>
+            </thead>
+            <tbody>
+              {program.modules.map((m: any) => (
+                <tr>
+                  <th scope="row">
+                    {m.n}. {m.theme}
+                  </th>
+                  <td class="hours" data-label="Теория">
+                    {m.theory} ч
+                  </td>
+                  <td class="hours" data-label="Практика">
+                    {m.practice} ч
+                  </td>
+                  <td class="result" data-label="Результат">
+                    {m.result}
+                    <span class="attest">Аттестация: {m.attest}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">Итого</th>
+                <td class="hours" data-label="Теория">
+                  {totals.theory} ч
+                </td>
+                <td class="hours" data-label="Практика">
+                  {totals.practice} ч
+                </td>
+                <td data-label="Всего">
+                  {totals.theory + totals.practice} ч, аттестация по каждому модулю
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    program.attestation && (
+      <section>
+        <h2>Аттестация</h2>
+        <p>{program.attestation.intro}</p>
+        <ol>
+          {program.attestation.items.map((item: string) => (
+            <li>{item}</li>
+          ))}
+        </ol>
+        <h3>Итоговый тест</h3>
+        <p>{program.attestation.test}</p>
+        <h3>Кейсы</h3>
+        <p>{program.attestation.cases}</p>
+        <p class="note">
+          Программа образовательная. Диагнозы не ставим, препараты не назначаем. Документ
+          после программы описан на странице <a href="/legal">«Документы»</a>.
+        </p>
+      </section>
+    )
+  }
+
+  <section>
+    <h2>Формат и расписание</h2>
+    <dl class="facts">
+      <div>
+        <dt>Формат занятий</dt>
+        <dd>{isStub(program.format) ? unknown : program.format}</dd>
+      </div>
+      <div>
+        <dt>Ближайший поток</dt>
+        <dd>{isStub(program.nextCohort) ? unknown : program.nextCohort}</dd>
+      </div>
+      <div>
+        <dt>Учебная нагрузка</dt>
+        <dd>{program.studyLoad ?? `${program.hours} академических часов`}</dd>
+      </div>
+    </dl>
+    <p class="placeholder">
+      Даты занятий, время и площадка: уточняются. Расписание появится здесь до старта
+      набора.
+    </p>
+  </section>
+
+  <section>
+    <h2>Записаться</h2>
+    <p class="lead">
+      {price(program.price)}
+      {program.priceEarly && program.priceEarly !== program.price && (
+        <>, ранняя оплата {price(program.priceEarly)}</>
+      )}
+      . Предоплата {price(program.prepay)} фиксирует место и цену, возвращаем по запросу до
+      старта.
+    </p>
+    <p class="cta-row">
+      <a class="button" href={`/apply?program=${program.slug}`}>Заполнить заявку</a>
+      <a class="link-more" href="/legal">Оплата, возврат и перенос</a>
+    </p>
+    <p class="note">
+      Заявка ни к чему не обязывает: сначала уточняем поток и отвечаем на вопросы.
+    </p>
+  </section>
+
+  {
+    program.faq?.length > 0 && (
+      <section>
+        <h2>Вопросы и ответы</h2>
+        <dl class="faq">
+          {program.faq.map((item: any) => (
+            <>
+              <dt>{item.q}</dt>
+              <dd>{item.a}</dd>
+            </>
+          ))}
+        </dl>
+      </section>
+    )
+  }
+</Base>

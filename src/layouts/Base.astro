@@ -13,10 +13,17 @@ const base = "https://pedagog.beliberde.net";
 const canonical = new URL(path, base).href;
 
 const nav = [
-  { href: "/program", label: "Программа" },
+  { href: "/programs", label: "Программы" },
+  { href: "/apply", label: "Записаться" },
   { href: "/legal", label: "Документы" },
   { href: "/about", label: "О центре" },
 ];
+
+// /program и /program/<slug> относятся к разделу «Программы».
+const isActive = (href: string) =>
+  href === "/programs"
+    ? path === "/programs" || path.startsWith("/program")
+    : path === href || path.startsWith(`${href}/`);
 ---
 
 <!doctype html>
@@ -29,7 +36,7 @@ const nav = [
     <link rel="canonical" href={canonical} />
     <meta name="robots" content="index, follow" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Игровая зависимость и деньги" />
+    <meta property="og:site_name" content="Учебный центр" />
     <meta property="og:locale" content="ru_RU" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -38,12 +45,14 @@ const nav = [
   </head>
   <body>
     <header class="top">
-      <p class="top__kicker">Программа для специалистов</p>
-      <p class="top__name"><a href="/">Игровая зависимость и деньги</a></p>
+      <div class="top__brand">
+        <p class="top__kicker">Учебный центр</p>
+        <p class="top__name"><a href="/">Программы для специалистов</a></p>
+      </div>
       <nav class="nav" aria-label="Разделы сайта">
         {
           nav.map((item) => (
-            <a href={item.href} aria-current={item.href === path ? "page" : undefined}>
+            <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
               {item.label}
             </a>
           ))
@@ -56,11 +65,13 @@ const nav = [
     </main>
 
     <footer class="foot">
-      <p>Игровая зависимость и деньги. Программа 144 часа.</p>
+      <p>Учебный центр. Программы для психологов и помогающих специалистов.</p>
       <p class="placeholder">Сведения о лицензии партнёра: уточняются.</p>
       <div class="foot__links">
-        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
-        <a href="/#zayavka">Заявка</a>
+        <a href="/programs">Программы</a>
+        <a href="/apply">Записаться</a>
+        <a href="/legal">Документы</a>
+        <a href="/about">О центре</a>
       </div>
     </footer>
   </body>

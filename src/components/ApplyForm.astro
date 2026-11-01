@@ -1,0 +1,232 @@
+---
+import { programs } from "../lib/programs.js";
+
+interface Props {
+  preselect?: string;
+}
+const { preselect } = Astro.props;
+---
+
+<form
+  class="apply-form"
+  id="apply-form"
+  action="/api/apply"
+  method="post"
+  novalidate
+  data-preselect={preselect}
+>
+  <div class="field">
+    <label for="name">Имя</label>
+    <input
+      id="name"
+      name="name"
+      type="text"
+      autocomplete="name"
+      required
+      minlength="2"
+      placeholder="Как к вам обращаться"
+      aria-describedby="name-error"
+    />
+    <p class="field-error" id="name-error" data-error-for="name" hidden></p>
+  </div>
+
+  <div class="field">
+    <label for="email">Почта</label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      autocomplete="email"
+      inputmode="email"
+      required
+      placeholder="name@example.com"
+      aria-describedby="email-error"
+    />
+    <p class="field-error" id="email-error" data-error-for="email" hidden></p>
+  </div>
+
+  <div class="field">
+    <label for="contact">Телефон или телеграм</label>
+    <input
+      id="contact"
+      name="contact"
+      type="text"
+      autocomplete="tel"
+      required
+      placeholder="+7 900 000 00 00 или @nickname"
+      aria-describedby="contact-hint contact-error"
+    />
+    <p class="field-hint" id="contact-hint">Достаточно одного способа связи.</p>
+    <p class="field-error" id="contact-error" data-error-for="contact" hidden></p>
+  </div>
+
+  <div class="field">
+    <label for="program">Программа</label>
+    <select id="program" name="program" required aria-describedby="program-error">
+      <option value="">Выберите программу</option>
+      {
+        programs.map((p: any) => (
+          <option value={p.slug}>{p.title}, {p.hours} ч</option>
+        ))
+      }
+      <option value="other">Другое направление</option>
+    </select>
+    <p class="field-error" id="program-error" data-error-for="program" hidden></p>
+  </div>
+
+  <div class="check">
+    <input id="consent" name="consent" type="checkbox" required aria-describedby="consent-error" />
+    <label for="consent">
+      Согласен на обработку персональных данных: имя, почта и телефон или телеграм нужны,
+      чтобы ответить на заявку. Условия в разделе <a href="/legal">«Документы»</a>.
+    </label>
+  </div>
+  <p class="field-error" data-error-for="consent" id="consent-error" hidden></p>
+
+  <button class="button button--wide" type="submit">Отправить заявку</button>
+  <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+</form>
+
+<div class="form-success" id="form-success" hidden>
+  <h2>Заявка отправлена</h2>
+  <p>
+    Записали вашу заявку. Ответим по указанной почте или в телеграме, уточним поток и
+    оплату.
+  </p>
+  <p><a href="/programs">Вернуться к каталогу программ</a></p>
+</div>
+
+<script>
+  const form = document.getElementById("apply-form") as HTMLFormElement | null;
+  const success = document.getElementById("form-success") as HTMLElement | null;
+  const status = document.getElementById("form-status") as HTMLElement | null;
+
+  if (form && success) {
+    const preselect =
+      form.dataset.preselect || new URLSearchParams(window.location.search).get("program");
+    if (preselect) {
+      const select = form.querySelector("#program") as HTMLSelectElement | null;
+      if (select && [...select.options].some((o) => o.value === preselect)) {
+        select.value = preselect;
+      }
+    }
+
+    const rules: Record<string, (value: string, form: HTMLFormElement) => string> = {
+      name: (value) => (value.trim().length < 2 ? "Укажите имя: минимум 2 символа." : ""),
+      email: (value) =>
+        /^[^\s@]+@[^\s@]+\.[a-zA-Zа-яА-Я]{2,}$/.test(value.trim())
+          ? ""
+          : "Укажите почту вида name@example.com.",
+      contact: (value) => {
+        const v = value.trim();
+        if (!v) return "Укажите телефон или телеграм.";
+        const digits = v.replace(/\D/g, "");
+        const isPhone = digits.length >= 10 && /^[\d\s()+-]+$/.test(v);
+        const isTelegram = /^@[a-zA-Z0-9_]{4,32}$/.test(v);
+        return isPhone || isTelegram ? "" : "Телефон из 10 цифр или телеграм через @.";
+      },
+      program: (value) => (value ? "" : "Выберите программу или пункт «Другое направление»."),
+    };
+
+    const showError = (name: string, message: string) => {
+      const box = form.querySelector(`[data-error-for="${name}"]`) as HTMLElement | null;
+      const field = form.elements.namedItem(name) as HTMLInputElement | null;
+      if (box) {
+        box.textContent = message;
+        box.hidden = !message;
+      }
+      if (field) {
+        if (message) field.setAttribute("aria-invalid", "true");
+        else field.removeAttribute("aria-invalid");
+      }
+    };
+
+    const validate = () => {
+      const errors: Array<{ name: string; message: string }> = [];
+
+      Object.keys(rules).forEach((name) => {
+        const field = form.elements.namedItem(name) as HTMLInputElement | null;
+        if (!field) return;
+        const message = rules[name](field.value, form);
+        showError(name, message);
+        if (message) errors.push({ name, message });
+      });
+
+      const consent = form.elements.namedItem("consent") as HTMLInputElement | null;
+      const consentMessage = consent?.checked
+        ? ""
+        : "Без согласия на обработку персональных данных отправить заявку нельзя.";
+      showError("consent", consentMessage);
+      if (consentMessage) errors.push({ name: "consent", message: consentMessage });
+
+      return errors;
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (status) status.textContent = "";
+
+      const errors = validate();
+      if (errors.length > 0) {
+        const first = form.elements.namedItem(errors[0].name) as HTMLElement | null;
+        first?.focus();
+        if (status) {
+          status.textContent = `Проверьте форму: ${errors.length} ${errors.length === 1 ? "поле" : "поля"}.`;
+        }
+        return;
+      }
+
+      const button = form.querySelector("button[type=submit]") as HTMLButtonElement | null;
+      button?.setAttribute("disabled", "disabled");
+      if (button) button.textContent = "Отправляем";
+
+      const payload = {
+        name: (form.elements.namedItem("name") as HTMLInputElement).value.trim(),
+        email: (form.elements.namedItem("email") as HTMLInputElement).value.trim(),
+        contact: (form.elements.namedItem("contact") as HTMLInputElement).value.trim(),
+        program: (form.elements.namedItem("program") as HTMLSelectElement).value,
+        consent: (form.elements.namedItem("consent") as HTMLInputElement).checked,
+      };
+
+      try {
+        const response = await fetch("/api/apply", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || !result.ok) {
+          throw new Error(result.error || "Сервер не принял заявку.");
+        }
+
+        form.hidden = true;
+        success.hidden = false;
+        success.setAttribute("tabindex", "-1");
+        success.focus();
+      } catch (error) {
+        if (status) {
+          status.textContent =
+            "Не получилось отправить заявку. Проверьте связь и попробуйте ещё раз.";
+        }
+        button?.removeAttribute("disabled");
+        if (button) button.textContent = "Отправить заявку";
+      }
+    });
+
+    // Ошибку убираем, как только поле исправляют.
+    form.addEventListener("input", (event) => {
+      const target = event.target as HTMLInputElement | null;
+      const name = target?.name;
+      if (!name || !rules[name]) return;
+      if ((target as HTMLInputElement).getAttribute("aria-invalid") === "true") {
+        showError(name, rules[name]((target as HTMLInputElement).value, form));
+      }
+    });
+
+    form.addEventListener("change", (event) => {
+      const target = event.target as HTMLInputElement | null;
+      if (target?.name === "consent" && target.checked) showError("consent", "");
+    });
+  }
+</script>

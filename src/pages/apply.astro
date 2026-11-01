@@ -1,0 +1,28 @@
+---
+import Base from "../layouts/Base.astro";
+import ApplyForm from "../components/ApplyForm.astro";
+import { price, programs } from "../lib/programs.js";
+
+const title = "Запись на программу";
+const description =
+  "Форма записи на программу учебного центра: имя, почта, телефон или телеграм, выбор программы и согласие на обработку персональных данных.";
+---
+
+<Base title={title} description={description} path="/apply">
+  <section class="page-head">
+    <h1>Запись на программу</h1>
+    <p class="page-head__lead">
+      Заполните форму: ответим по почте или в телеграме, уточним поток, формат и оплату.
+      Заявка ни к чему не обязывает.
+    </p>
+  </section>
+
+  <section class="apply">
+    <ApplyForm />
+
+    <p class="note">
+      Предоплата {price(programs[0]?.prepay)} фиксирует место и цену. Возврат и перенос
+      описаны на странице <a href="/legal">«Документы»</a>.
+    </p>
+  </section>
+</Base>

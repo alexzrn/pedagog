@@ -1,0 +1,183 @@
+---
+import { cardMeta, price } from "../lib/programs.js";
+
+interface Props {
+  programs: any[];
+  id?: string;
+}
+
+const { programs, id = "catalog" } = Astro.props;
+
+const directions = [...new Set(programs.map((p: any) => p.direction))];
+
+const plural = (n: number, one: string, few: string, many: string) => {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+  return many;
+};
+---
+
+<section class="catalog" id={id}>
+  <div class="catalog__controls">
+    <div class="search">
+      <label for={`${id}-q`}>Поиск по программам</label>
+      <input
+        id={`${id}-q`}
+        type="search"
+        inputmode="search"
+        autocomplete="off"
+        placeholder="Например: зависимость, долги"
+        data-catalog-search
+      />
+    </div>
+
+    {
+      directions.length > 0 && (
+        <div class="chips" role="group" aria-label="Фильтр по направлению">
+          <button type="button" class="chip" data-direction="" aria-pressed="true">
+            Все направления
+          </button>
+          {directions.map((d: string) => (
+            <button type="button" class="chip" data-direction={d} aria-pressed="false">
+              {d}
+            </button>
+          ))}
+        </div>
+      )
+    }
+  </div>
+
+  <p class="catalog__count" aria-live="polite" data-catalog-count>
+    {programs.length} {plural(programs.length, "программа", "программы", "программ")} в каталоге
+  </p>
+
+  <ul class="cards" data-catalog-list>
+    {
+      programs.map((p: any) => (
+        <li
+          class="card"
+          data-direction={p.direction}
+          data-search={[p.title, p.summary, p.direction, p.document]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase()}
+        >
+          <div class="card__top">
+            <span class="badge">{p.direction}</span>
+            {p.status && <span class="card__status">{p.status}</span>}
+          </div>
+
+          <h3 class="card__title">
+            <a href={`/program/${p.slug}`}>{p.title}</a>
+          </h3>
+          <p class="card__summary">{p.summary}</p>
+
+          <dl class="card__meta">
+            <div>
+              <dt>Объём</dt>
+              <dd>{p.hours} ак. ч, {p.modulesCount} модулей</dd>
+            </div>
+            <div>
+              <dt>Формат</dt>
+              <dd>{p.format && p.format !== "уточняется" ? p.format : "уточняется"}</dd>
+            </div>
+            <div>
+              <dt>Ближайший поток</dt>
+              <dd>
+                {p.nextCohort && p.nextCohort !== "уточняется" ? p.nextCohort : "уточняется"}
+              </dd>
+            </div>
+            <div>
+              <dt>Цена</dt>
+              <dd>
+                <span class="card__price">{price(p.price)}</span>
+                {p.priceEarly && p.priceEarly !== p.price && (
+                  <span class="card__price-early">ранняя {price(p.priceEarly)}</span>
+                )}
+              </dd>
+            </div>
+          </dl>
+
+          <div class="card__actions">
+            <a class="button button--small" href={`/apply?program=${p.slug}`}>Записаться</a>
+            <a class="link-more" href={`/program/${p.slug}`}>Программа и учебный план</a>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="catalog__empty" data-catalog-empty hidden>
+    По этому запросу программ нет. Сбросьте фильтр или напишите нам через <a
+      href="/apply">страницу записи</a>.
+  </p>
+
+  {
+    programs.length < 3 && (
+      <p class="catalog__note">
+        Набор программ пополняется: сейчас в каталоге {programs.length}{" "}
+        {plural(programs.length, "программа", "программы", "программ")}. Новые направления
+        появятся на этой странице.
+      </p>
+    )
+  }
+</section>
+
+<script>
+  const normalize = (value) =>
+    (value || "").toLowerCase().replace(/ё/g, "е").replace(/\s+/g, " ").trim();
+
+  document.querySelectorAll(".catalog").forEach((catalog) => {
+    const input = catalog.querySelector("[data-catalog-search]") as HTMLInputElement | null;
+    const count = catalog.querySelector("[data-catalog-count]") as HTMLElement | null;
+    const empty = catalog.querySelector("[data-catalog-empty]") as HTMLElement | null;
+    const cards = [...catalog.querySelectorAll("[data-catalog-list] > li")] as HTMLElement[];
+    const chips = [...catalog.querySelectorAll(".chip")] as HTMLButtonElement[];
+    let direction = "";
+
+    const total = cards.length;
+    const plural = (n: number) => {
+      const mod10 = n % 10;
+      const mod100 = n % 100;
+      if (mod10 === 1 && mod100 !== 11) return "программа";
+      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "программы";
+      return "программ";
+    };
+
+    const apply = () => {
+      const query = normalize(input?.value).split(" ").filter(Boolean);
+      let shown = 0;
+
+      cards.forEach((card) => {
+        const haystack = normalize(card.dataset.search);
+        const matchesQuery = query.every((word) => haystack.includes(word));
+        const matchesDirection = !direction || card.dataset.direction === direction;
+        const visible = matchesQuery && matchesDirection;
+        card.hidden = !visible;
+        if (visible) shown += 1;
+      });
+
+      if (count) {
+        count.textContent =
+          shown === total
+            ? `${total} ${plural(total)} в каталоге`
+            : `Показано ${shown} из ${total}`;
+      }
+      if (empty) empty.hidden = shown !== 0;
+
+      chips.forEach((chip) => {
+        chip.setAttribute("aria-pressed", String((chip.dataset.direction || "") === direction));
+      });
+    };
+
+    input?.addEventListener("input", apply);
+    chips.forEach((chip) =>
+      chip.addEventListener("click", () => {
+        direction = chip.dataset.direction || "";
+        apply();
+      }),
+    );
+  });
+</script>

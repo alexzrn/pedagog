@@ -1,0 +1,31 @@
+---
+import Base from "../layouts/Base.astro";
+import ProgramCatalog from "../components/ProgramCatalog.astro";
+import { programs, updated } from "../lib/programs.js";
+
+const title = "Программы: каталог учебного центра";
+const description =
+  "Все программы учебного центра в одном списке: направление, объём в академических часах, формат, ближайший поток и стоимость. Поиск и фильтр по направлению.";
+---
+
+<Base title={title} description={description} path="/programs" wide>
+  <section class="page-head">
+    <h1>Программы</h1>
+    <p class="page-head__lead">
+      Полный список программ центра. Фильтр по направлению и поиск по названию и
+      содержанию. Данные каталога обновлены {updated}.
+    </p>
+  </section>
+
+  <ProgramCatalog programs={programs} id="catalog-programs" />
+
+  <section>
+    <h2>Если нужной программы нет</h2>
+    <p>
+      Каталог пополняется. Напишите, какое направление вам нужно, через{" "}
+      <a href="/apply">страницу записи</a>: заявка сохраняется, ответим по почте или в
+      телеграме.
+    </p>
+    <p class="cta-row"><a class="button" href="/apply">Оставить заявку</a></p>
+  </section>
+</Base>
