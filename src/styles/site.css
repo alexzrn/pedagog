@@ -501,18 +501,23 @@ li:last-child {
   .plan tfoot {
     display: block;
     border-top: 1px solid #b8ae9e;
-    padding-top: 0.6rem;
+    padding-top: 0.75rem;
+    margin-top: 0.25rem;
   }
 
+  .plan tfoot tr,
   .plan tfoot th,
   .plan tfoot td {
-    display: inline;
-    padding: 0;
+    display: block;
+    width: auto;
+    padding: 0.1rem 0;
     font-weight: 700;
   }
 
-  .plan tfoot th::after {
-    content: ": ";
+  .plan tfoot td::before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: var(--ink-soft);
   }
 }
 
