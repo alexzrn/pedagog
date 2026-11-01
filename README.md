@@ -1,9 +1,7 @@
-# pedagog
+# pedagog — «Психология»
 
-Minimal Astro starter for Cloudflare Pages.
+Независимый учебный центр ДПО по психологии и надёжности.
 
-- Build: `npm run build` → `dist`
-- Hello World.
-
-auto-deploy test 2026-11-01T02:44:40Z
-test 2026-11-01T02:56:57Z
+- Статический каркас (без сборки): деплой — Cloudflare Pages из ветки `main`.
+- Бэкенд — FamilyOS API: `https://familyos.beliberde.net/api/v1`.
+- Домен: https://pedagog.beliberde.net (nginx-прокси на VPS → Pages).
