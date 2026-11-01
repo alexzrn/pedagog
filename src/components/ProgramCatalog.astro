@@ -94,7 +94,7 @@ const plural = (n: number, one: string, few: string, many: string) => {
               <dd>
                 <span class="card__price">{price(p.price)}</span>
                 {p.priceEarly && p.priceEarly !== p.price && (
-                  <span class="card__price-early">ранняя {price(p.priceEarly)}</span>
+                  <span class="card__price-early">при ранней оплате {price(p.priceEarly)}</span>
                 )}
               </dd>
             </div>

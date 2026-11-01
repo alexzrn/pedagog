@@ -906,6 +906,10 @@ li:last-child {
   border-radius: 0 4px 4px 0;
 }
 
+.form-success:focus {
+  outline: 0;
+}
+
 .form-success h2 {
   margin-bottom: 0.5rem;
 }
