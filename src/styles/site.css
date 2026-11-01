@@ -451,7 +451,8 @@ li:last-child {
   .plan tbody,
   .plan tr,
   .plan th,
-  .plan td {
+  .plan td,
+  .plan caption {
     display: block;
     width: auto;
   }
